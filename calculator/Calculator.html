@@ -51,6 +51,10 @@
     let operand1 = 0,operand2 = 0;
     let operator1 = ""; 
     let btnDisplay=document.querySelector("#display");
+    
+    document.addEventListener('keydown', (event)=>{
+        btnDisplay.textContent +=  event.key;
+    })
     let buttons=document.querySelectorAll(".digit");
     buttons.forEach((button) =>{
         button.addEventListener('click', ()=>{

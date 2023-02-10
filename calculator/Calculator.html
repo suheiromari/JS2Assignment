@@ -1,0 +1,145 @@
+<html>
+
+<head>
+    <style>
+         #btn0 ,  #btn3 ,#btn6 ,#btn9 , #display, #plus ,#divide  {
+              margin-left: 350px; 
+
+        }
+        #display{
+            margin-left: 350px; 
+            border: 2px solid red; 
+            width : 303px;
+            height : 80px;
+            font-size: large;
+        }
+        button{
+            width : 100px;
+            height : 40px;
+            font-size: large;
+
+        }
+    </style>
+</head>
+<body>
+    <div id="display"></div>
+    <button id='btn0' class="digit"> 0 </button>  
+    <button id='btn1' class="digit"> 1 </button>
+    <button id='btn2' class="digit"> 2 </button>
+    <br>
+    <button id='btn3' class="digit"> 3 </button>
+    <button id='btn4' class="digit"> 4 </button>
+    <button id='btn5' class="digit"> 5 </button>
+    <br>
+    <button id='btn6' class="digit"> 6 </button>
+    <button id='btn7' class="digit"> 7 </button>
+    <button id='btn8' class="digit"> 8 </button>
+    <br>
+    <button id='btn9' class="digit"> 9 </button>
+    <button id='btnEqual'> = </button>
+    <button id='btnClear'> C </button>
+    <br>
+    <button id='plus' class="oparator"> + </button>
+    <button id='minus' class="oparator"> - </button>
+    <button id='mult' class="oparator"> * </button>
+    <br>
+    <button id='divide' class="oparator"> / </button>
+    <button id='decimal' class="oparator"> . </button>
+    <button id='backspace'  > backspace</button>  
+    <script src="operators.js"></script>
+<script>
+    let operand1 = 0,operand2 = 0;
+    let operator1 = ""; 
+    let btnDisplay=document.querySelector("#display");
+    let buttons=document.querySelectorAll(".digit");
+    buttons.forEach((button) =>{
+        button.addEventListener('click', ()=>{
+        let str= button.id;
+           
+        if ((btnDisplay.textContent.length ==   0 && btnDisplay.textContent==0 ) || 
+        ((operator1 !=  0) && (  btnDisplay.textContent == operand1)))
+                btnDisplay.textContent  = str.substring(3,4);
+        else 
+                btnDisplay.textContent += str.substring(3,4);         
+        
+
+        })}) ; 
+    let backspace=document.querySelector("#backspace"); 
+    backspace.addEventListener('click', ()=>{
+    btnDisplay.textContent =  btnDisplay.textContent.substring(0, btnDisplay.textContent.length-1)  ;
+            
+        }) ; 
+    
+    let btndecimal=document.querySelector("#decimal"); 
+    btndecimal.addEventListener('click', ()=>{
+    if (!(btnDisplay.textContent.includes(".")))
+            btnDisplay.textContent += "."  ;
+                
+    }) ; 
+    
+    let btnClear=document.querySelector("#btnClear"); 
+    btnClear.addEventListener('click', ()=>{
+        btnDisplay.textContent = ''   ;
+          operand1 = 0 ;
+          operand2 = 0;
+          operator1 = "";      
+        }) ;
+    
+    let btnEqual = document.querySelector("#btnEqual") ;
+    btnEqual.addEventListener('click' , ()=>{
+        getResult(); 
+        operator1 = '' ;     
+    })
+    function getResult(){
+        if (  operator1  == 0)  operand1 = btnDisplay.textContent;
+        else   operand2 = btnDisplay.textContent;
+       
+        if (  operator1  != 0  &&  operand2  != 0  ){
+            btnDisplay.textContent = operate (operand1 , operand2, operator1);
+            operand1 = btnDisplay.textContent; 
+
+        }
+        
+    }
+    function add(operand1 , operand2){
+        
+        return ( parseFloat(operand1) + parseFloat(operand2) );
+    }
+    function subtract(operand1 , operand2){
+
+        return (parseFloat(operand1) - parseFloat(operand2));
+    }
+    function multiply(operand1 , operand2){
+
+        return (parseFloat(operand1) * parseFloat(operand2));
+    }
+    function divide(operand1 , operand2){
+        if (operand2 != 0)
+            return (parseFloat(operand1) / parseFloat(operand2));
+        
+    }
+
+    function operate(operand1 , operand2, operator){
+        switch(operator)
+        {
+        case '+' :
+            return add(operand1,operand2);
+        
+        break;
+        case '-' :
+            return subtract(operand1,operand2);
+        break;
+        case '*':
+            return multiply(operand1,operand2);
+        break;
+        case '/':
+            {
+            if (operand2 == 0 )  btnDisplay.textContent = 'ERROR';
+            else
+                return divide(operand1,operand2);}
+        break;  
+    }
+    }// end of function
+</script>
+</body>
+</html>
